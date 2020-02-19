@@ -1,3 +1,8 @@
+#include "tpl_os.h"
+#include "nxt_motors.h"
+#include "ecrobot_interface.h" 
+#include "ecrobot_private.h"
+
 int println(char* str)
 {
   static int c = 0;
