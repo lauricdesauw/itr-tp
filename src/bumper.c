@@ -1,10 +1,19 @@
 // Code oil 
+
+
+int touch_left = 0x11;
+int touch_right = 0x10;
+
+DeclareTask(task_bump_right);
+DeclareTask(task_bump_left);
+
+
+
 TASK task_bump_right {
         PRIORITY = 1;
         AUTOSTART = FALSE;
         ACTIVATION = 1;
         SCHEDULE = FULL;
-        EVENT = touch_right;
 };
 
 TASK task_bump_left {
@@ -12,33 +21,27 @@ TASK task_bump_left {
         AUTOSTART = FALSE;
         ACTIVATION = 1;
         SCHEDULE = FULL;
-        EVENT = touch_left;
-};
-
-EVENT touch_right {
-      MASK = 0x10;
-};
-
-EVENT touch_left {
-      MASK = 0x11;
 };
 
 
 // Code C
 TASK(task_bump_right)
 {
-    WaitEvent(touch_right);
-    turn_left(20);
+    turn_left(40);
     ChainTask(taskmain);
     TerminateTask();
 }
 
 TASK(task_bump_left)
 {
-  WaitEvent(touch_left);
-  turn_right(20);
+  turn_right(40);
   ChainTask(taskmain);
   TerminateTask();
 }
+
+
+
+
+
 
 
