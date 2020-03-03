@@ -46,8 +46,8 @@ void turn_right(int degree)
   
   //set the speed in negative for the left wheel
 
-  nxt_motor_set_speed(NXT_PORT_C,20,0);
-  nxt_motor_set_speed(NXT_PORT_A,-20,0);
+  nxt_motor_set_speed(NXT_PORT_C,100,0);
+  nxt_motor_set_speed(NXT_PORT_A,-100,0);
 
 
   int left_motor,right_motor;
@@ -73,8 +73,8 @@ void go_front(int degree)
   
   //set the speed in negative for the left wheel
 
-  nxt_motor_set_speed(NXT_PORT_C,20,0);
-  nxt_motor_set_speed(NXT_PORT_A,20,0);
+  nxt_motor_set_speed(NXT_PORT_C,100,0);
+  nxt_motor_set_speed(NXT_PORT_A,100,0);
 
 
   int left_motor,right_motor;
@@ -90,7 +90,7 @@ void go_front(int degree)
   // when he have rotate enough, set the speed at 0 for both
   nxt_motor_set_speed(NXT_PORT_C,0,1);
   nxt_motor_set_speed(NXT_PORT_A,0,1);
-}
+  }
 
 void go_back(int degree)
 {
@@ -100,8 +100,8 @@ void go_back(int degree)
   
   //set the speed in negative for the left wheel
 
-  nxt_motor_set_speed(NXT_PORT_C,-20,0);
-  nxt_motor_set_speed(NXT_PORT_A,-20,0);
+  nxt_motor_set_speed(NXT_PORT_C,-100,0);
+  nxt_motor_set_speed(NXT_PORT_A,-100,0);
 
 
   int left_motor,right_motor;
@@ -118,4 +118,3 @@ void go_back(int degree)
   nxt_motor_set_speed(NXT_PORT_C,0,1);
   nxt_motor_set_speed(NXT_PORT_A,0,1);
 }
-

@@ -48,13 +48,6 @@ CPU test {
 
     APPMODE std {
     };
-
-    TASK task1 {
-        PRIORITY = 1;
-        AUTOSTART = TRUE { APPMODE = std; };
-        ACTIVATION = 1;
-        SCHEDULE = FULL;
-    };   
     
     COUNTER SystemCounter {
       SOURCE = it_timer1;
@@ -85,8 +78,80 @@ CPU test {
        CATEGORY = 2;
 		PRIORITY = 1;
 		SOURCE = button_right;
-   };
+   }; 
+
+   
+
+    TASK init {
+        PRIORITY = 1;
+        AUTOSTART = TRUE { APPMODE = std; };
+        ACTIVATION = 1;
+        SCHEDULE = FULL;
+    };
+
+    TASK taskmain {
+        PRIORITY = 1;
+        AUTOSTART = FALSE;
+        ACTIVATION = 1;
+        SCHEDULE = FULL;
+    };   
+
+
+
+
+
+
+    
+    TASK get_sonar {
+        PRIORITY = 1;
+        AUTOSTART = FALSE;
+        ACTIVATION = 1;
+        SCHEDULE = FULL;
+        EVENT = droite;
+    };   
+
+    EVENT droite {
+        MASK = 0x01;
+    };
+
+
+
+
+
+
+
+
+    TASK task_bump_right {
+        PRIORITY = 1;
+        AUTOSTART = FALSE;
+        ACTIVATION = 1;
+        SCHEDULE = FULL;
+};
+
+TASK task_bump_left {
+        PRIORITY = 1;
+        AUTOSTART = FALSE;
+        ACTIVATION = 1;
+        SCHEDULE = FULL;
+};
+
+TASK task_bump_both {
+        PRIORITY = 1;
+        AUTOSTART = FALSE;
+        ACTIVATION = 1;
+        SCHEDULE = FULL;
+};
+
+TASK task_sonar {
+        PRIORITY = 1;
+        AUTOSTART = FALSE;
+        ACTIVATION = 1;
+        SCHEDULE = FULL;
+};
+
 };
 
 /* End of file nxt_simple.oil */
+
+
 

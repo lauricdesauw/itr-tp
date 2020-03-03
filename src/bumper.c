@@ -23,7 +23,7 @@ TASK task_bump_left {
         SCHEDULE = FULL;
 };
 
-TASK task_bump_bothx {
+TASK task_bump_both {
         PRIORITY = 1;
         AUTOSTART = FALSE;
         ACTIVATION = 1;
@@ -31,6 +31,14 @@ TASK task_bump_bothx {
 };
 
 // Code C
+
+int touch_left = 0x11;
+int touch_right = 0x10;
+
+DeclareTask(task_bump_right);
+DeclareTask(task_bump_left);
+DeclareTask(task_bump_both);
+
 TASK(task_bump_right)
 {
     turn_left(100);
