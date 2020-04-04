@@ -55,7 +55,7 @@ CPU test {
       TICKSPERBASE = 1;
       MINCYCLE = 1; 
     };
-
+	
    ISR isr_button_start {
        CATEGORY = 2;
 		PRIORITY = 1;
@@ -80,21 +80,101 @@ CPU test {
 		SOURCE = button_right;
    }; 
 
-   
+   	ALARM bumper_alarm {
+
+        COUNTER = SystemCounter;
+        ACTION = ACTIVATETASK{
+            TASK = checkBumpers;
+        };
+
+        AUTOSTART=TRUE{
+            ALARMTIME=100;
+            CYCLETIME=100;
+            APPMODE = std;
+
+        };
+    };
+	
+	ALARM go_forward {
+
+		COUNTER = SystemCounter;
+		ACTION = ACTIVATETASK{
+			TASK = goForward;
+		};
+
+		AUTOSTART=TRUE{
+			ALARMTIME=100;
+			CYCLETIME=50;
+			APPMODE = std;
+
+		};
+    };
+
 
     TASK init {
-        PRIORITY = 1;
+        PRIORITY = 100;
         AUTOSTART = TRUE { APPMODE = std; };
         ACTIVATION = 1;
         SCHEDULE = FULL;
     };
-
-    TASK taskmain {
+	
+	TASK goForward {
         PRIORITY = 1;
         AUTOSTART = FALSE;
         ACTIVATION = 1;
         SCHEDULE = FULL;
     };   
+
+	//Higher priority than goForward task, so it can interrupt it
+    TASK checkBumpers {
+        PRIORITY = 2;
+        AUTOSTART = FALSE;
+        ACTIVATION = 1;
+        SCHEDULE = FULL;
+    };   
+	/*
+	* Higher priorities than chechBumpers task, might not be really usefull
+	* as long as it's higher than goForward
+	*/
+	
+	TASK turn_right {
+        PRIORITY = 3;
+        AUTOSTART = FALSE;
+        ACTIVATION = 1;
+        SCHEDULE = FULL;
+    };  
+	
+	TASK turn_left {
+        PRIORITY = 3;
+        AUTOSTART = FALSE;
+        ACTIVATION = 1;
+        SCHEDULE = FULL;
+    };  
+	
+	TASK culDeSac {
+        PRIORITY = 100;
+        AUTOSTART = FALSE;
+        ACTIVATION = 1;
+        SCHEDULE = FULL;
+    };  
+	
+	/*
+	* Higher priorities than chechBumpers task, might not be really usefull
+	* as long as it's higher than goForward
+	*/
+	TASK turn_back {
+        PRIORITY = 5;
+        AUTOSTART = FALSE;
+        ACTIVATION = 1;
+        SCHEDULE = FULL;
+    };  
+	
+	TASK sonarcheck {
+        PRIORITY = 4;
+        AUTOSTART = FALSE;
+        ACTIVATION = 1;
+        SCHEDULE = FULL;
+    };  
 
 
 
@@ -102,52 +182,7 @@ CPU test {
 
 
     
-    TASK get_sonar {
-        PRIORITY = 1;
-        AUTOSTART = FALSE;
-        ACTIVATION = 1;
-        SCHEDULE = FULL;
-        EVENT = droite;
-    };   
-
-    EVENT droite {
-        MASK = 0x01;
-    };
-
-
-
-
-
-
-
-
-    TASK task_bump_right {
-        PRIORITY = 1;
-        AUTOSTART = FALSE;
-        ACTIVATION = 1;
-        SCHEDULE = FULL;
-};
-
-TASK task_bump_left {
-        PRIORITY = 1;
-        AUTOSTART = FALSE;
-        ACTIVATION = 1;
-        SCHEDULE = FULL;
-};
-
-TASK task_bump_both {
-        PRIORITY = 1;
-        AUTOSTART = FALSE;
-        ACTIVATION = 1;
-        SCHEDULE = FULL;
-};
-
-TASK task_sonar {
-        PRIORITY = 1;
-        AUTOSTART = FALSE;
-        ACTIVATION = 1;
-        SCHEDULE = FULL;
-};
+    
 
 };
 
