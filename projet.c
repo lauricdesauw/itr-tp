@@ -28,6 +28,7 @@ int right = 0;
 U8 sonar_sensor = NXT_PORT_S2;
 U8 left_bumper_sensor = NXT_PORT_S4;
 U8 right_bumper_sensor = NXT_PORT_S1;
+int isCulDeSac = 0;
 
 
 ////////////////////////
@@ -66,14 +67,23 @@ DeclareTask(culDeSac);
 
 TASK(init)
 {
-    ecrobot_init_sonar_sensor(sonar_sensor);
-    TerminateTask();
+	ecrobot_init_sonar_sensor(sonar_sensor);
+	TerminateTask();
+	ActivateTask(goForward);
 }
 
 TASK(goForward)
 {
-	go_front(30);
-	TerminateTask();
+	if (isCulDeSac)
+	{
+		TerminateTask();
+	}
+	else
+	{
+		go_front(30);
+		TerminateTask();
+		ChainTask(goForward);
+	}
 }
 
 
@@ -129,12 +139,25 @@ TASK(culDeSac)
 	int value = ecrobot_get_sonar_sensor(sensor);
 	if (value < 10)
 	{
-		CancelAlarm(go_forward); // est-ce que c'est la bonne manière de cancelAlarm ?
+		isCulDeSac = 1;
+		// est-ce que c'est la bonne manière de cancelAlarm ?
 		CancelAlarm(bumper_alarm);
+		CancelAlarm(sonar_alarm);
 		display_string("cul de sac");
 		display_update();
 	}
-	TerminateTaskl
+	TerminateTask();
+}
+
+TASK(autoSonarCheck)
+{
+	int value = ecrobot_get_sonar_sensor(sensor);
+	if (value < 10)
+	{ 
+		ChainTask(turn_right);
+		ChainTask(sonarcheck);
+	}
+	TerminateTask();
 }
 
 

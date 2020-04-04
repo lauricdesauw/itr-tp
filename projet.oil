@@ -95,16 +95,16 @@ CPU test {
         };
     };
 	
-	ALARM go_forward {
-
+	Alarm sonar_alarm {
+	
 		COUNTER = SystemCounter;
 		ACTION = ACTIVATETASK{
-			TASK = goForward;
+			TASK = autoSonarCheck;
 		};
 
 		AUTOSTART=TRUE{
 			ALARMTIME=100;
-			CYCLETIME=50;
+			CYCLETIME=500;
 			APPMODE = std;
 
 		};
@@ -157,6 +157,14 @@ CPU test {
         ACTIVATION = 1;
         SCHEDULE = FULL;
     };  
+	
+	//Same priority as checkBumpers
+	TASK autoSonarCheck {
+		PRIORITY = 2;
+        AUTOSTART = FALSE;
+        ACTIVATION = 1;
+        SCHEDULE = FULL;
+	};
 	
 	/*
 	* Higher priorities than chechBumpers task, might not be really usefull
